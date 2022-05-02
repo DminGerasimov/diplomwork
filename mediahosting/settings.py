@@ -70,8 +70,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "VERIFIED_EMAIL": True,
     }
 }
-# Client ID 6476213e98ec37e37e76
-# Client secret 391fbb13219b33b18009e049052dc0e6945cfc9d
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
