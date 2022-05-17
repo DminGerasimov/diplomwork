@@ -24,6 +24,9 @@ yarn-error.log*
 #Sublime text section
 mhProject.*
 
+#MS Workbench diagramm
+mwb_Models.*
+
 #Python section https://github.com/github/gitignore/blob/main/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
