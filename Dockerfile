@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:latest-alpine
+FROM python:3.10.4-alpine3.15
 
 # set work directory
 WORKDIR /usr/src/app
