@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 RUN apk add libffi-dev
-RUN pip install --upgrade pip wheel
+# RUN pip install --upgrade pip wheel
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
