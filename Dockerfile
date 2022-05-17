@@ -10,8 +10,8 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 # RUN pip install --upgrade pip wheel
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./req.txt .
+RUN pip install -r req.txt
 
 # copy project
 COPY . .
