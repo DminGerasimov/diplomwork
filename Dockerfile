@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8-alpine3.15
+FROM ubuntu:20.04
 
 # set work directory
 WORKDIR /usr/src/app
@@ -10,8 +10,9 @@ ENV PYTHONUNBUFFERED 1
 
 # install dependencies
 # RUN pip install --upgrade pip wheel
-COPY ./req.txt .
-RUN pip install -r req.txt
+RUN apt install python
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
