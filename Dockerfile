@@ -9,9 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-# RUN pip install --upgrade pip wheel
 RUN apt update
-RUN apt -i install python3
+RUN apt install python3 python3-pip -y
+#RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
