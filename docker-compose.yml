@@ -10,6 +10,12 @@ services:
       - 8000:8000
     env_file:
       - ./.env.dev
+    networks:
+      local_nework:
+    depends_on:
+      - db
+    links:
+      - db:db
 
   db:
     image:
@@ -20,7 +26,12 @@ services:
       - POSTGRES_USER=psg_user
       - POSTGRES_PASSWORD=lkmenerM4_
       - POSTGRES_DB=psg_django_db
+    networks:
+      local_nework:
 
 volimes:
   postgres_data:
 
+
+networks:
+  local_nework:
