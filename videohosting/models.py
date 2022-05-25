@@ -36,11 +36,11 @@ class Video_clip(models.Model):
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=240)
     create_time = models.DateTimeField(auto_now_add=True)
-    user = ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comments(models.Model):
     title = models.CharField(max_length=45)
     description = models.CharField(max_length=240)
     create_time = models.DateTimeField(auto_now_add=True)
-    user = ForeignKey(User, on_delete=models.CASCADE)
-    video_clip = ForeignKey(Video_clip, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video_clip = models.ForeignKey(Video_clip, on_delete=models.CASCADE)
