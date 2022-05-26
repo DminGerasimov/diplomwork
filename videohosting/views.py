@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from videohosting import models, serializers
+import django_filters.rest_framework
 
 
 class Video_clip_view_set(viewsets.ModelViewSet):
