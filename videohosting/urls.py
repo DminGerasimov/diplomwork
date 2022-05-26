@@ -1,5 +1,5 @@
 from rest_framework import routers
-from views import Video_clip_view_set
+from videohosting import views
 
 router = routers.DefaultRouter()
-router.register(r'videoclips', Video_clip_view_set)
+router.register(r'videoclips', views.Video_clip_view_set)
