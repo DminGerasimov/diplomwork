@@ -8,6 +8,11 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# set developers environment for superuser
+ENV DJANGO_SUPERUSER_PASSWORD admin
+ENV DJANGO_SUPERUSER_USERNAME admin
+ENV DJANGO_SUPERUSER_EMAIL admin@admin.ru 
+
 # install dependencies
 RUN apt update \
 	&& apt install python3 python3-pip python3-dev postgresql-server-dev-all gcc libpq-dev netcat -y

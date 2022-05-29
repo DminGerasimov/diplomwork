@@ -7,17 +7,38 @@ class User(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name} {self.surname}'
+        return f'{self.name}'
 
 class Subscription(models.Model):
-    members = models.ManyToManyField(
+    subsciber = models.ManyToManyField(
         User,
-        through='User_has_subscription',
-        through_fields=('subscription','user'),
+        through='Participant',
+        through_fields=('subscription', 'user'),
     )
 
-class User_has_subscription(models.Model):
-    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE,)
+    def __str__(self):
+        return f'Подписка {self.id}'
+
+# Промежуточная таблица отношения M2M
+class Participant(models.Model):
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE)
+    # Пользователь, объект подписки
+    user = models.ForeignKey(User, on_delete=models.CASCADE,)
+    # Пользователь, владелец подписки
+    actor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='participant_actor',
+    )
+
+    def __str__(self):
+        return f'participant={self.id} subscription={self.subscription.id} user={self.user} actor={self.actor}'
+
+
+class Video_clip(models.Model):
+    title = models.CharField(max_length=120)
+    description = models.CharField(max_length=240)
+    create_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
@@ -32,13 +53,7 @@ class Like(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,)
 
 
-class Video_clip(models.Model):
-    title = models.CharField(max_length=120)
-    description = models.CharField(max_length=240)
-    create_time = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-class Comments(models.Model):
+class Comment(models.Model):
     title = models.CharField(max_length=45)
     description = models.CharField(max_length=240)
     create_time = models.DateTimeField(auto_now_add=True)
