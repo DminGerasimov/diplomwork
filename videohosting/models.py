@@ -40,6 +40,7 @@ class Video_clip(models.Model):
     description = models.CharField(max_length=240)
     create_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    upload = models.FileField(upload_to='video/%Y/%m/%d')
 
 
 class Ban(models.Model):
