@@ -23,5 +23,5 @@ services:
       - POSTGRES_PASSWORD=lkmenerM4_
       - POSTGRES_DB=psg_django_db
 
-volimes:
+volumes:
   postgres_data:

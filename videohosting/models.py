@@ -1,5 +1,9 @@
 from django.db import models
 
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
+import os
+
 
 class User(models.Model):
     name = models.CharField(max_length=16)
@@ -40,7 +44,15 @@ class Video_clip(models.Model):
     description = models.CharField(max_length=240)
     create_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    upload = models.FileField(upload_to='video/%Y/%m/%d')
+    upload = models.FileField(upload_to='video/%Y/%m/%d/')
+
+
+# Подписка на удаление медиа файла из Video_clip
+@receiver(pre_delete, sender=Video_clip)
+def clip_model_delete(sender, instance, **kwargs):
+    if instance.upload:
+        if os.path.isfile(instance.upload.path):
+            os.remove(instance.upload.path)
 
 
 class Ban(models.Model):
