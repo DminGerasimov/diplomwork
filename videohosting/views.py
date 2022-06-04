@@ -1,15 +1,27 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from videohosting import models, serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework import status
 
-class Video_clip_view_set(viewsets.ModelViewSet):
+
+class Video_clip_view_set(  mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.CreateModelMixin,
+                            mixins.ListModelMixin,
+                            mixins.RetrieveModelMixin,
+                            viewsets.GenericViewSet):
     queryset = models.Video_clip.objects.all()
     serializer_class = serializers.Video_clip_serializer
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...videclips?user=1&create_time="2022...
     filterset_fields = ['user', 'create_time']
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # instance.delete()    
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class User_view_set(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
@@ -18,12 +30,15 @@ class User_view_set(viewsets.ModelViewSet):
     # Фильтрация по параметрам в строке запроса: ...videclips?name=User1&create_time="2022...
     filterset_fields = ['name', 'create_time']
     permission_classes = [permissions.IsAuthenticated]
+
+
 class Ban_view_set(viewsets.ModelViewSet):
     queryset = models.Ban.objects.all()
     serializer_class = serializers.Ban_serializer
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...bans?user=1&banned=true
     filterset_fields = ['banned', 'user']
+
 
 class Like_view_set(viewsets.ModelViewSet):
     queryset = models.Like.objects.all()
