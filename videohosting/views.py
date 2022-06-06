@@ -19,31 +19,33 @@ class Video_clip_view_set(  mixins.DestroyModelMixin,
     # Фильтрация по параметрам в строке запроса: ...videclips?user=1&create_time="2022...
     filterset_fields = ['user', 'create_time']
 
+    def isMyUserId(context):
+        # Сравнение имени пользователя обекта из БД и имени пользователя из контекста запроса
+        return str(context.get_object().user) == str(context.request.user)
+
+    # Создание только своего контента доступно авторизованным пользователям
     def perform_create(self, serializer):
-        instance = self.get_object()
-        if str(instance.user) != str(self.request.user):
-            raise ValidationError({"permissions": "not available"})   
+        if not self.isMyUserId():
+            raise ValidationError(
+                {"detail": f"permissions not available for user {str(self.request.user)}"}
+            )
         serializer.save()
     # curl -u admin:admin -v  -d "title=Vc5" -X PUT http://51.250.69.126:8000/api/videoclips/
 
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        # Если свой видеоклип - удаляем
-        if str(instance.user) == str(request.user):
-            instance.delete()    
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
-        # curl -u admin:admin -v  -d "title=Vc" -X DELETE http://51.250.69.126:8000/api/videoclips/4/
-
-    # Обновление видеоклипов доступно авторизованным пользователям своего контента
+    # Обновление только своего контента доступно авторизованным пользователям
     def perform_update(self, serializer):
-        instance = self.get_object()
-        if str(instance.user) != str(self.request.user):
-            raise ValidationError({"permissions": "not available"})      
-        serializer.save()
-    # curl -u admin:admin -v  -d "title=Video clip&description=Descriptions1" -X PATCH http://51.250.69.126:8000/api/videoclips/6/
+        self.perform_create(serializer)
+    # curl -u admin:admin -v  -d "title=Video clip&description=Descriptions1" -X PATCH http://51.250.69.126:8000/api/videoclips/1/
 
+    # Удаление только своего контента доступно авторизованным пользователям
+    def perform_destroy(self, request, *args, **kwargs):
+        if not self.isMyUserId():
+            raise ValidationError(
+                {"detail": f"permissions not available for user {str(self.request.user)}"}
+            )
+        self.get_object().delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    # curl -u admin:admin -v  -d "title=Vc" -X DELETE http://51.250.69.126:8000/api/videoclips/1/
 
 
 class User_view_set(viewsets.ModelViewSet):
@@ -83,5 +85,5 @@ class Participant_view_set(viewsets.ModelViewSet):
     queryset = models.Participant.objects.all()
     serializer_class = serializers.Participant_serializer
     filter_backends = [DjangoFilterBackend]
-    # Фильтрация по параметрам в строке запроса: ...participant?user=1&actor=1&subscription=2
+    # Фильтрация по параметрам в строке запроса: ...participants?user=1&actor=1&subscription=2
     filterset_fields = ['subscription', 'user', 'actor']
