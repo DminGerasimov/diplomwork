@@ -12,6 +12,7 @@ services:
       - ./.env.dev
     links:
       - db:db
+      - redis:redis
 
   db:
     image:
@@ -22,6 +23,10 @@ services:
       - POSTGRES_USER=psg_user
       - POSTGRES_PASSWORD=lkmenerM4_
       - POSTGRES_DB=psg_django_db
+      
+  redis:
+    image:
+      redis:7.0.0-alpine
 
 volumes:
   postgres_data:

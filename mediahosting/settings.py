@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'videohosting',
     'rest_framework',
     'django_filters',
+    'channels',
+    'chat',    
 ]
 
 SITE_ID = 1
@@ -92,6 +94,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mediahosting.wsgi.application'
+
+ASGI_APPLICATION = 'mediahosting.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(os.environ.get("REDIS_HOSTS"), int(os.environ.get("REDIS_PORT")))],
+        }
+    }
+}
 
 
 # Database
