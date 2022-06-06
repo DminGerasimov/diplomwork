@@ -15,12 +15,12 @@ python3 manage.py flush --no-input
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py createsuperuser --noinput
-python3 manage.py loaddata ./fixtures/user.json \
-  ./fixtures/video_clip.json \
-  ./fixtures/ban.json \
-  ./fixtures/like.json \
-  ./fixtures/subscription.json \
-  ./fixtures/participant.json \
-  ./fixtures/comment.json
+ # python3 manage.py loaddata ./fixtures/user.json \
+ #  ./fixtures/video_clip.json \
+ #  ./fixtures/ban.json \
+ #  ./fixtures/like.json \
+ #  ./fixtures/subscription.json \
+ #  ./fixtures/participant.json \
+ #  ./fixtures/comment.json
 
 exec "$@"

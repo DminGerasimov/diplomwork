@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 
 class Video_clip_view_set(  mixins.DestroyModelMixin,
@@ -18,10 +19,32 @@ class Video_clip_view_set(  mixins.DestroyModelMixin,
     # Фильтрация по параметрам в строке запроса: ...videclips?user=1&create_time="2022...
     filterset_fields = ['user', 'create_time']
 
+    def perform_create(self, serializer):
+        instance = self.get_object()
+        if str(instance.user) != str(self.request.user):
+            raise ValidationError({"permissions": "not available"})   
+        serializer.save()
+    # curl -u admin:admin -v  -d "title=Vc5" -X PUT http://51.250.69.126:8000/api/videoclips/
+
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        # instance.delete()    
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # Если свой видеоклип - удаляем
+        if str(instance.user) == str(request.user):
+            instance.delete()    
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        # curl -u admin:admin -v  -d "title=Vc" -X DELETE http://51.250.69.126:8000/api/videoclips/4/
+
+    # Обновление видеоклипов доступно авторизованным пользователям своего контента
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        if str(instance.user) != str(self.request.user):
+            raise ValidationError({"permissions": "not available"})      
+        serializer.save()
+    # curl -u admin:admin -v  -d "title=Video clip&description=Descriptions1" -X PATCH http://51.250.69.126:8000/api/videoclips/6/
+
+
 
 class User_view_set(viewsets.ModelViewSet):
     queryset = models.User.objects.all()

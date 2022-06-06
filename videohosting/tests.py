@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from videohosting import models
 from django.contrib.auth.models import User as DjangoUser
 
+
 class ViewsTestCase(TestCase):
     c = Client()
 
@@ -12,7 +13,7 @@ class ViewsTestCase(TestCase):
         dj_user.save()
 
         # Create all models
-        user = models.User(name='UserName', surname='UserSurname')
+        user = models.User(name='UserName', surname='UserSurname', django_user=dj_user)
         user.save()
 
     def test_api_available(self):

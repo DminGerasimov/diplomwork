@@ -5,7 +5,7 @@ from videohosting import models
 class Video_clip_serializer(serializers.ModelSerializer):
     class Meta:
         model = models.Video_clip
-        fields = ['pk', 'title', 'description', 'create_time', 'user']
+        fields = ['pk', 'title', 'description', 'create_time', 'user', 'upload']
 
 
 class User_serializer(serializers.ModelSerializer):
