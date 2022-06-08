@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'videohosting',
     'rest_framework',
     'django_filters',
+
+    'drf_spectacular',
 ]
 
 SITE_ID = 1
@@ -165,7 +167,15 @@ MEDIA_ROOT = 'mediafiles'
 
 # The default permission policy
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ]
+    ],
 }
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Videohosting API',
+    'DESCRIPTION': 'Videohosting API backend',
+    'VERSION': '1.0.0',
+}
+
