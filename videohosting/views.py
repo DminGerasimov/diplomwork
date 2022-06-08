@@ -18,6 +18,7 @@ class Video_clip_view_set(  mixins.DestroyModelMixin,
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...videclips?user=1&create_time="2022...
     filterset_fields = ['user', 'create_time']
+    permission_classes = [permissions.IsAuthenticated]
 
     def isMyUserId(context):
         # Сравнение имени пользователя обекта из БД и имени пользователя из контекста запроса
@@ -63,7 +64,7 @@ class Ban_view_set(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...bans?user=1&banned=true
     filterset_fields = ['banned', 'user']
-
+    permission_classes = [permissions.IsAuthenticated]
 
 class Like_view_set(viewsets.ModelViewSet):
     queryset = models.Like.objects.all()
@@ -71,7 +72,7 @@ class Like_view_set(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...likes?like=12&dislike=2&user=1
     filterset_fields = ['like', 'dislike', 'user']
-
+    permission_classes = [permissions.IsAuthenticated]
 
 class Comment_view_set(viewsets.ModelViewSet):
     queryset = models.Comment.objects.all()
@@ -79,7 +80,7 @@ class Comment_view_set(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...comments?user=1&video_clip=1...
     filterset_fields = ['create_time', 'user', 'video_clip']
-
+    permission_classes = [permissions.IsAuthenticated]
 
 class Participant_view_set(viewsets.ModelViewSet):
     queryset = models.Participant.objects.all()
@@ -87,3 +88,4 @@ class Participant_view_set(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     # Фильтрация по параметрам в строке запроса: ...participants?user=1&actor=1&subscription=2
     filterset_fields = ['subscription', 'user', 'actor']
+    permission_classes = [permissions.IsAuthenticated]
