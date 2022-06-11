@@ -102,3 +102,22 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ('create_time',)
+
+class ChannelUserGroup(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Группа-канал'
+        verbose_name_plural = 'Группа-каналы'
+
+
+class UserMessage(models.Model):
+    text = models.CharField(max_length=250)
+    create_time = models.DateTimeField(auto_now_add=True)
+    channelUserGroup = models.ForeignKey(ChannelUserGroup, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+            verbose_name = 'Сообщение'
+            verbose_name_plural = 'Сообщения'
+            ordering = ('create_time',)
