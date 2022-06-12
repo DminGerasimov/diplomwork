@@ -49,13 +49,10 @@ INSTALLED_APPS = [
     'videohosting',
     'rest_framework',
     'django_filters',
-<<<<<<< HEAD
 
     'drf_spectacular',
-=======
     'channels',
     'chat',    
->>>>>>> websockets
 ]
 
 SITE_ID = 1

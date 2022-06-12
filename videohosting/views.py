@@ -89,3 +89,21 @@ class Participant_view_set(viewsets.ModelViewSet):
     # Фильтрация по параметрам в строке запроса: ...participants?user=1&actor=1&subscription=2
     filterset_fields = ['subscription', 'user', 'actor']
     permission_classes = [permissions.IsAuthenticated]
+
+
+class ChannelUserGroup_view_set(viewsets.ModelViewSet):
+    queryset = models.ChannelUserGroup.objects.all()
+    serializer_class = serializers.ChannelUserGroup_serializer
+    filter_backends = [DjangoFilterBackend]
+    # Фильтрация по параметрам в строке запроса: ...channelusergroup?user=1
+    filterset_fields = ['user']
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class UserMessage_view_set(viewsets.ModelViewSet):
+    queryset = models.UserMessage.objects.all()
+    serializer_class = serializers.UserMessage_serializer
+    filter_backends = [DjangoFilterBackend]
+    # Фильтрация по параметрам в строке запроса: ...channelusergroup?sender=1&...
+    filterset_fields = ['create_time', 'channelUserGroup', 'sender']
+    permission_classes = [permissions.IsAuthenticated]

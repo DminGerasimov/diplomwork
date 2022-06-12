@@ -41,3 +41,13 @@ class Participant_serializer(serializers.ModelSerializer):
         model = models.Participant
         fields = ['subscription', 'user', 'actor']
 
+
+class ChannelUserGroup_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ChannelUserGroup
+        fields = ['user']
+
+class UserMessage_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserMessage
+        fields = ['text', 'create_time', 'channelUserGroup', 'sender']
