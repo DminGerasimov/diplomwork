@@ -49,8 +49,13 @@ INSTALLED_APPS = [
     'videohosting',
     'rest_framework',
     'django_filters',
+<<<<<<< HEAD
 
     'drf_spectacular',
+=======
+    'channels',
+    'chat',    
+>>>>>>> websockets
 ]
 
 SITE_ID = 1
@@ -61,9 +66,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'read.user',
             'user:email',
         ],
-        "VERIFIED_EMAIL": True,
+        "VERIFIED_EMAIL": False,
     }
 }
+
+LOGIN_REDIRECT_URL = '/chat/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,6 +102,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mediahosting.wsgi.application'
+
+ASGI_APPLICATION = 'mediahosting.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(os.environ.get("REDIS_HOSTS"), int(os.environ.get("REDIS_PORT")))],
+        }
+    }
+}
 
 
 # Database
@@ -178,4 +197,3 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Videohosting API backend',
     'VERSION': '1.0.0',
 }
-
