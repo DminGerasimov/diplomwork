@@ -61,9 +61,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'read.user',
             'user:email',
         ],
-        "VERIFIED_EMAIL": True,
+        "VERIFIED_EMAIL": False,
     }
 }
+
+LOGIN_REDIRECT_URL = '/chat/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,6 +99,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mediahosting.wsgi.application'
 
 ASGI_APPLICATION = 'mediahosting.asgi.application'
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

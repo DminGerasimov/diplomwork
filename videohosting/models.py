@@ -11,7 +11,10 @@ class User(models.Model):
     name = models.CharField(max_length=16)
     surname = models.CharField(max_length=16)
     create_time = models.DateTimeField(auto_now_add=True)
-    django_user = models.OneToOneField(DjangoUser, on_delete=models.CASCADE, default=None)
+    django_user = models.OneToOneField( DjangoUser,
+                                        on_delete=models.CASCADE,
+                                        unique=True,
+                                        default=None)
 
     def __str__(self):
         return f'{self.name}'

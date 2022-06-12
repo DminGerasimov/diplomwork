@@ -1,0 +1,29 @@
+<!-- chat/templates/chat/main.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Main chat template</title>
+</head>
+<body>
+    <h3>Create new user</h3><br>
+    Login:<input id="login-input" type="text" size="20"><br>
+    Password:<input id="password-input" type="text" size="20"><br>
+    Email:<input id="email-input" type="text" size="20"><br>
+    <input id="create_user-submit" type="button" value="Create"><br>
+    <hr><br>
+
+    <h3>Send message to user</h3><br>
+   <p><select name="hero[]">
+    <option value="Чебурашка">Чебурашка</option>
+    <option selected value="Крокодил Гена">Крокодил Гена</option>
+    <option value="Шапокляк">Шапокляк</option>
+    <option value="Крыса Лариса">Крыса Лариса</option>
+   </select></p>
+    <textarea id="chat-log" cols="40" rows="5"></textarea><br>
+    <input id="send-message-input" type="text" size="40"><br>
+    <input id="send-message-submit" type="button" value="Send">
+ <hr><br>
+ <a href="logout/">Logout</a>
+</body>
+</html>
